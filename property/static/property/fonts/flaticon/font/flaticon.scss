@@ -1,0 +1,89 @@
+$flaticon-font: "flaticon";
+
+@font-face {
+    font-family: $flaticon-font;
+    src: url("./flaticon.ttf?d27c30f5f7df1803e87851be00a2bbf9") format("truetype"),
+url("./flaticon.woff?d27c30f5f7df1803e87851be00a2bbf9") format("woff"),
+url("./flaticon.woff2?d27c30f5f7df1803e87851be00a2bbf9") format("woff2"),
+url("./flaticon.eot?d27c30f5f7df1803e87851be00a2bbf9#iefix") format("embedded-opentype"),
+url("./flaticon.svg?d27c30f5f7df1803e87851be00a2bbf9#flaticon") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$flaticon-map: (
+    "pin": "\f101",
+    "pin-1": "\f102",
+    "pin-2": "\f103",
+    "tick": "\f104",
+    "house": "\f105",
+    "internet": "\f106",
+    "apartment": "\f107",
+    "town": "\f108",
+    "key": "\f109",
+    "apartment-1": "\f10a",
+    "apartment-2": "\f10b",
+    "key-1": "\f10c",
+    "house-1": "\f10d",
+    "loan": "\f10e",
+    "money": "\f10f",
+    "price-tag": "\f110",
+);
+
+.flaticon-pin:before {
+    content: map-get($flaticon-map, "pin");
+}
+.flaticon-pin-1:before {
+    content: map-get($flaticon-map, "pin-1");
+}
+.flaticon-pin-2:before {
+    content: map-get($flaticon-map, "pin-2");
+}
+.flaticon-tick:before {
+    content: map-get($flaticon-map, "tick");
+}
+.flaticon-house:before {
+    content: map-get($flaticon-map, "house");
+}
+.flaticon-internet:before {
+    content: map-get($flaticon-map, "internet");
+}
+.flaticon-apartment:before {
+    content: map-get($flaticon-map, "apartment");
+}
+.flaticon-town:before {
+    content: map-get($flaticon-map, "town");
+}
+.flaticon-key:before {
+    content: map-get($flaticon-map, "key");
+}
+.flaticon-apartment-1:before {
+    content: map-get($flaticon-map, "apartment-1");
+}
+.flaticon-apartment-2:before {
+    content: map-get($flaticon-map, "apartment-2");
+}
+.flaticon-key-1:before {
+    content: map-get($flaticon-map, "key-1");
+}
+.flaticon-house-1:before {
+    content: map-get($flaticon-map, "house-1");
+}
+.flaticon-loan:before {
+    content: map-get($flaticon-map, "loan");
+}
+.flaticon-money:before {
+    content: map-get($flaticon-map, "money");
+}
+.flaticon-price-tag:before {
+    content: map-get($flaticon-map, "price-tag");
+}

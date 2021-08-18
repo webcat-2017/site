@@ -1,0 +1,194 @@
+{% extends "neruhomist/base.html" %}
+{% load static %}
+{% load cache %}
+{% block title %}{{settings.title}}{% endblock %}
+{% block meta_description %}{{settings.meta_description}}{% endblock %}
+{% block og_title %}{{settings.title}}{% endblock %}
+{% block site_name %}{{settings.title}}{% endblock %}
+{% block base_url %}{{base_url}}{% endblock %}
+{% block og_logo %}{{base_url}}/static/logo.png{% endblock %}
+{% block og_description %}{{settings.meta_description}}{% endblock %}
+{% block content %}
+<!-- image site -->
+    <div class="hero-wrap js-fullheight" style="background-image: url('{{settings.site_image.url}}');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true"></div>
+      </div>
+    </div>
+<!-- END -->
+<!-- search -->
+    <section class="ftco-section ftco-book ftco-no-pt ftco-no-pb">
+      <div class="container">
+        <div class="row justify-content-end">
+          <div class="col-lg-4">
+            <form action="{% url 'property:search' %}"  method="post" class="appointment-form">
+              {% csrf_token %}
+              {% cache 3600 search %}
+              <!--<h3 class="mb-3">Пошук нерухомості</h3>-->
+              <div class="row">
+                <div class="col-md-12">
+                   <div class="form-group">
+                    <div class="form-field">
+                      <div class="select-wrap">
+                        <div class="icon"><span class="fa fa-chevron-down"></span></div>
+                        <select name="category" id="category" class="form-control">
+                          <option value="0">Категорія</option>
+                          {% if categories %}
+                              {% for category in categories %}
+                                  <option  value="{{ category.id }}">{{ category }}</option>
+                              {% endfor %}
+                          {% endif %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                    <div class="form-field">
+                      <div class="select-wrap">
+                        <div class="icon"><span class="fa fa-chevron-down"></span></div>
+                        <select name="object_type" id="object_type" class="form-control">
+                          <option value="0">Тип Об'єкту</option>
+                          {% if object_type %}
+                              {% for type in object_type %}
+                                  <option  value="{{ type.id }}">{{ type }}</option>
+                              {% endfor %}
+                          {% endif %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                    <div class="form-field">
+                      <div class="select-wrap">
+                        <div class="icon"><span class="fa fa-chevron-down"></span></div>
+                        <select name="locality" id="locality" class="form-control">
+                          <option value="0">Населенный пункт</option>
+                          {% if locality %}
+                              {% for location in locality %}
+                                  <option  value="{{ location.id }}">{{ location }}</option>
+                              {% endfor %}
+                          {% endif %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="form-field">
+                      <div class="select-wrap">
+                        <div class="icon"><span class="fa fa-chevron-down"></span></div>
+                        <select name="storeys" id="storeys" class="form-control">
+                          <option value="0">Поверховість</option>
+                            {% if storeys %}
+                              {% for storey in storeys %}
+                                  <option  value="{{ storey.id }}">{{ storey }}</option>
+                              {% endfor %}
+                          {% endif %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="form-field">
+                      <div class="select-wrap">
+                        <div class="icon"><span class="fa fa-chevron-down"></span></div>
+                        <select name="rooms" id="rooms" class="form-control">
+                          <option value="0">Кількість кімнат</option>
+                          {% if rooms %}
+                              {% for room in rooms %}
+                                  <option  value="{{ room.id }}">{{ room }}</option>
+                              {% endfor %}
+                          {% endif %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% if currency %}
+                  <label style="display: none"><input type="radio" value="0" name="currency"  checked="checked" hidden/></label>
+                  {% for cur in currency %}
+                      <div class="col-md-4 col-4">
+                          <div class="form-group">
+                            <div class="form-field">
+                              <label class="cur" for="{{ cur.id }}"><input type="radio" value="{{ cur.id }}" name="currency" id="{{ cur.id }}"  hidden/>{{ cur }}</label>
+                            </div>
+                          </div>
+                        </div>
+                  {% endfor %}
+              {% endif %}
+
+              <div class="col-md-12">
+                  <div class="form-group">
+                    <input id="price" type="text" name="price" value="" />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <input type="submit" value="Знайти" class="btn btn-primary py-3 px-4">
+                  </div>
+                </div>
+              </div>
+              {% endcache %}
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- END -->
+<!-- Categories -->
+    <section class="ftco-section ftco-services bg-light">
+    	<div class="container">
+    		<div class="row">
+        {% for category in categories %}
+          <div class="col-md-4 d-flex services align-self-stretch px-4 ftco-animate">
+            <div class="d-block services-wrap text-center">
+            <div class="hovereffect">
+                <img class="img-responsive" src="{{category.image.url}}" alt="">
+                <div class="overlay">
+                   <h2>{{ category.title }}</h2>
+                   <a class="info" href="{% url 'property:category' category.id %}">Дивитись</a>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        </div>
+    	</div>
+    </section>
+<!-- END Categories-->
+<!-- slider recommended objects -->
+<section class="ftco-section testimony-section bg-light">
+  <div class="container">
+    <div class="row justify-content-center pb-5 mb-3">
+      <div class="col-md-12 heading-section text-center ftco-animate">
+        <h3>Нерухомість онлайн РЕКОМЕНДУЄ</h3>
+      </div>
+    </div>
+    <div class="row ftco-animate">
+      <div class="col-md-12">
+        <div class="carousel-testimony owl-carousel">
+
+          {% for r in recommended %}
+          <div class="item ">
+            <div class="testimony-wrap d-flex">
+            <div class="hovereffect">
+                <img class="img-responsive" src="{{r.image.url}}" alt="">
+                <p>{{r.title}}</p>
+                <div class="overlay">
+                   <a class="info" href="{% url 'property:object' r.id %}">Дивитись</a>
+                </div>
+            </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- END -->
+{% endblock %}

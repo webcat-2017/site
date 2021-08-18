@@ -1,0 +1,267 @@
+{% extends "neruhomist/base.html" %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}{{object.title}}{% endblock %}
+{% block meta_description %}{{object.meta_description}}{% endblock %}
+{% block og_title %}{{object.title}}{% endblock %}
+{% block site_name %}{{object.title}}{% endblock %}
+{% block base_url %}{{base_url}}{% endblock %}
+{% block og_logo %}{{base_url}}static/logo.png{% endblock %}
+{% block og_description %}{{object.meta_description}}{% endblock %}
+{% block content %}
+    <section>
+			<div class="container">
+				<div class="row no-gutters">
+					<div class="col-md-12">
+						<p class="breadcrumbs mb-2">
+						<span><a href="{{base_url}}">Головна  <i class="fa fa-chevron-right"></i></a></span>
+						<span><a href="{% url 'property:category' object.category_object.id %}">{{object.category_object}}  <i class="fa fa-chevron-right"></i></a></span>
+						<span>{{object}}  <i class="fa fa-chevron-right"></i></span>
+						</p>
+					</div>
+					<div class="col-md-6 wrap-about">
+						<div  class="page wrapper main-wrapper">
+							<div class="row clearfix">
+								<div class="col span_4 fwImage">
+									<div id="gallery-1" class="royalSlider rsDefault">
+    									<a class="rsImg" data-rsw="590" data-rsh="450"  data-rsBigImg="{{object.image.url}}" href="{{object.image.url}}"><img width="96" height="72" class="rsTmb" src="{{object.image.url}}" /></a>
+										{% if images %}
+											{% for image in images %}
+	 									 		<a class="rsImg" data-rsw="590" data-rsh="450"  data-rsBigImg="{{image.image.url}}" href="{{image.image.url}}"><img width="96" height="72" class="rsTmb" src="{{image.image.url}}" /></a>
+											{% endfor %}
+                                        {% else %}
+                                            <style type="text/css">
+                                                .rsNav{display: none;}
+                                            </style>
+                                        {% endif %}
+  									</div>
+								</div>
+							</div>
+  						</div>
+					</div>
+					<div class="col-md-6 wrap-about ftco-animate">
+	          <div class="heading-section">
+	          	<div class="pl-md-5">
+		            <h4>{{object.title}}</h4>
+	            </div>
+	          </div>
+	          <div class="pl-md-5">
+				  <div class="row">
+					{% if object.locality %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-pin-1"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Населенный пункт:</h3>
+		                <p>{{object.locality}}</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.area %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-pin-2"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Район/Массив:</h3>
+		                <p>{{object.area}}</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.street %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-pin"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Вулиця:</h3>
+		                <p>{{object.street}}</p>
+		              </div>
+		            </div>
+					{% endif %}
+                  {% if object.rooms %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-house"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Кількість кімнат:</h3>
+		                <p>{{object.rooms}}</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.cad_num %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-price-tag"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Кадастровий номер:</h3>
+		                <p>{{object.cad_num}}</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.total_space %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-house"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Загальна площа:</h3>
+		                <p>{{object.total_space}} m2</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.living_space %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-house"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Житлова площа:</h3>
+		                <p>{{object.living_space}} m2</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.kitchen_space %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-house"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Кухня площа:</h3>
+		                <p>{{object.kitchen_space}} m2</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.height %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-house"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Висота стелі:</h3>
+		                <p>{{object.height}} m</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.floor %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-apartment-1"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Поверх:</h3>
+		                <p>{{object.floor}}</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.storeys %}
+		            <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-apartment"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Поверховість:</h3>
+		                <p>{{object.storeys}}</p>
+		              </div>
+		            </div>
+					{% endif %}
+					{% if object.price %}
+					 <div class="services-2 col-lg-6 d-flex w-100">
+		              <div class="icon d-flex justify-content-center align-items-center">
+		            		<span class="flaticon-money"></span>
+		              </div>
+		              <div class="media-body pl-3">
+		                <h3 class="heading">Вартість:</h3>
+		                <p>{{ object.price }} {{ object.currency.sign }}</p>
+		              </div>
+		            </div>
+					{% endif %}
+		          </div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+		<section>
+			<div class="container">
+				<div class="row no-gutters">
+				<p class="description">Опис</p>
+				{% autoescape off %}
+					{{object.description}}
+				{% endautoescape %}
+				</div>
+			</div>
+		</section>
+		{% if interested %}
+		<section class="ftco-section testimony-section">
+  <div class="container">
+    <div class="row justify-content-center pb-5 mb-3">
+      <div class="col-md-12 heading-section text-center ftco-animate">
+        <h3>Це може вас зацікавити</h3>
+      </div>
+    </div>
+    <div class="row ftco-animate">
+      <div class="col-md-12">
+        <div class="carousel-testimony owl-carousel">
+
+          {% for i in interested %}
+          <div class="item ">
+<div class="testimony-wrap d-flex">
+            <div class="hovereffect">
+                <img class="img-responsive" src="{{i.image.url}}" alt="">
+                <p>{{i.title}}</p>
+                <div class="overlay">
+                   <a class="info" href="{% url 'property:object' i.id %}">Дивитись</a>
+                </div>
+            </div>
+
+</div>
+
+          </div>
+          {% endfor %}
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+		{% endif %}
+{% endblock %}
+{% block js %}
+<script src="{% static 'property/js/jquery.royalslider.min.js'%}"></script>
+    <script>
+    	 $(document).ready(function() {
+           $('#gallery-1').royalSlider({
+    fullscreen: {
+      enabled: true,
+      nativeFS: true
+    },
+    controlNavigation: 'thumbnails',
+    autoScaleSlider: true,
+    autoScaleSliderWidth: 960,
+    autoScaleSliderHeight: 850,
+    imageScaleMode: 'fit-if-smaller',
+    navigateByClick: false,
+    numImagesToPreload: 2,
+    controlNavigation: 'thumbnails',
+    arrowsNav: {{ arrowsNav }},
+    arrowsNavAutoHide: true,
+    arrowsNavHideOnTouch: true,
+    keyboardNavEnabled: true,
+    fadeinLoadedSlide: true,
+    globalCaption: false,
+    globalCaptionInside: false,
+    thumbs: {
+      arrowsAutoHide: true,
+      appendSpan: true,
+      firstMargin: true,
+      paddingBottom: 1
+    }
+  });
+		});
+    </script>
+{% endblock %}

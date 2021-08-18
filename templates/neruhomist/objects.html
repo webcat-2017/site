@@ -1,0 +1,70 @@
+{% extends "neruhomist/base.html" %}
+{% load static %}
+{% block title %}{{category.title}}{% endblock %}
+{% block meta_description %}{{settings.meta_description}}{% endblock %}
+{% block og_title %}{{category.title}}{% endblock %}
+{% block site_name %}{{category.title}}{% endblock %}
+{% block base_url %}{{base_url}}{% endblock %}
+{% block og_logo %}{{base_url}}static/logo.png{% endblock %}
+{% block og_description %}{{settings.meta_description}}{% endblock %}
+{% block content %}
+<section class="ftco-section bg-light">
+  <div class="container">
+    <div class="row justify-content-center pb-5 mb-3">
+      <div class="col-md-12 heading-section text-center ftco-animate">
+        <h3>{{category_objects.title}}</h3>
+      </div>
+    </div>
+    <div class="row d-flex">
+       {% for object in objects %}
+      <div class="col-md-4 p-4 d-flex ftco-animate">
+        <div class="blog-entry align-self-stretch">
+          <a href="{% url 'property:object' object.id %}" class="block-20 rounded" style="background-image: url({{object.image.url}});">
+          </a>
+          <div class="text text-center">
+            <h3 class="heading"><a href="{% url 'property:object' object.id %}">{{object.title}}</a></h3>
+            <div class="meta mb-2">
+              <div class="price">Ціна: <span>{{object.price}} {{ object.currency.sign }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+     {% endfor %}
+    </div>
+    {% if objects.paginator.num_pages >= 2 %}
+    <div class="row mt-5">
+          <div class="col text-center">
+            <div class="block-27">
+              <ul>
+                {% if objects.has_previous %}
+                  <li><a href="?page={{objects.previous_page_number}}">&lt;&lt;</a></li>
+                {% endif %}
+                {% for num in objects.paginator.page_range %}
+                  {% if num == objects.number %}
+                    <li class="active"><span>{{num}}</span></li>
+                  {% elif num > objects.number|add:'-3' and num < objects.number|add:'3' %}
+                    <li><a href="{% url 'property:page' category.id num %}">{{num}}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% if objects.has_next %}
+                <li><a href="?page={{ objects.next_page_number }}">&gt;&gt;</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+    {% endif %}
+  </div>
+</section>
+<section class="ftco-section bg-light">
+  <div class="container">
+    <div class="row justify-content-center pb-5 mb-3">
+      {% autoescape off %}
+      {{category.description}}
+      {% endautoescape %}
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

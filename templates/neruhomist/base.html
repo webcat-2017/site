@@ -1,0 +1,243 @@
+{% load static  compress %}{% load cache %}<!DOCTYPE html>
+<html lang="uk">
+<head>
+<title>{% block title %}{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}{% endblock %}" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index,follow" />
+<meta property="og:title" content="{% block og_title %}{% endblock %}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="{% block base_url %}{% endblock %}" />
+<meta property="og:site_name" content="{% block site_name %}{% endblock %}"/>
+<meta property="og:image" content="{% block og_logo %}{% endblock %}" />
+<meta property="og:description" content="{% block og_description %}{% endblock%}" />
+<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+{% compress css file style %}
+<link rel="stylesheet" href="{% static 'property/css/font-awesome/css/font-awesome.min.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/animate.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/owl.carousel.min.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/owl.theme.default.min.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/magnific-popup.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/bootstrap-datepicker.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/jquery.timepicker.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/flaticon.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/ion.rangeSlider.min.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/royalslider.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/style.css'%}">
+<link rel="stylesheet" href="{% static 'property/css/royalslider.css'%}">
+{% endcompress %}
+
+</head>
+<body>
+  <!-- social and phone -->
+  <div class="wrap">
+    <div class="container">
+      <div class="row justify-content-between">
+          <div class="col d-flex align-items-center">
+            <p class="mb-0 phone"><img src="{% static settings.phone_1.logo %}"/><span><a href="tel:{{settings.phone_1.phone}}">{{settings.phone_1.phone}}</a></span><img src='{% static settings.phone_2.logo %}'/><span><a href="tel:{{settings.phone_2.phone}}">{{settings.phone_2.phone}}</a></span></p>
+        </div>
+          <div class="col d-flex justify-content-end">
+            <div class="social-media">
+              <p class="mb-0 d-flex">
+                {% if settings.link_facebook %}
+                <a href="{{settings.link_facebook}}" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
+                {% endif %}
+                {% if settings.link_instagram %}
+                <a href="{{settings.link_instagram}}" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram fa-x2"><i class="sr-only">Instagram</i></span></a>
+                {% endif %}
+                {% if settings.link_telegram %}
+                <a href="{{settings.link_telegram}}" class="d-flex align-items-center justify-content-center"><span class="fa fa-telegram"><i class="sr-only">Telegram</i></span></a>
+                {% endif %}
+              </p>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- END -->
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="{{base_url}}"><img src="{% static 'logo.png' %}" /></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa fa-2x fa-bars"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active"><a href="{{base_url}}" class="nav-link">Головна</a></li>
+          {% if categories %}
+            {% for category in categories %}
+            <li class="nav-item"><a href="{% url 'property:category' category.id %}" class="nav-link">{{category}}</a></li>
+            {% endfor %}
+          {% endif %}
+          {% if pages %}
+            {% for page in pages %}
+              {% if page.menu %}
+                <li class="nav-item"><a href="{% url 'property:page' page.id %}" class="nav-link">{{page}}</a></li>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- END -->
+  <!-- content -->
+{% block content %}{% endblock %}
+  <!-- END -->
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
+          <h2 class="footer-heading">Інформація</h2>
+          <ul class="list-unstyled">
+            {% if pages %}
+            {% for page in pages %}
+              {% if page.information %}
+            <li><a href="{% url 'property:page' page.id %}" class="py-1 d-block">{{page}}</a></li>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
+          <h2 class="footer-heading">Про нас</h2>
+          <ul class="list-unstyled">
+            {% if pages %}
+            {% for page in pages %}
+              {% if page.about_as %}
+            <li><a href="{% url 'property:page' page.id %}" class="py-1 d-block">{{page}}</a></li>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
+          <h2 class="footer-heading">Контакти</h2>
+          <ul class="list-unstyled">
+            {% if settings.work_schedule %}
+              <li><span><i class="fa fa-clock-o" aria-hidden="true"></i>{{settings.work_schedule}}</span></li>
+            {% endif %}
+            {% if settings.phone_1 %}
+              <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:{{settings.phone_1.phone}}">{{settings.phone_1.phone}}</a></li>
+            {% endif %}
+            {% if settings.phone_2 %}
+              <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:{{settings.phone_2.phone}}">{{settings.phone_2.phone}}</a></li>
+            {% endif %}
+            {% if settings.phone_3 %}
+              <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:{{settings.phone_3.phone}}">{{settings.phone_3.phone}}</a></li>
+            {% endif %}
+            {% if settings.phone_4 %}
+              <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:{{settings.phone_4.phone}}">{{settings.phone_4.phone}}</a></li>
+            {% endif %}
+            {% if settings.email_1 %}
+              <li><span><i class="fa fa-envelope-o" aria-hidden="true"></i>{{settings.email_1}}</span></li>
+            {% endif %}
+            {% if settings.email_2 %}
+              <li><span><i class="fa fa-envelope-o" aria-hidden="true"></i>{{settings.email_2}}</span></li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-md-0 mb-4">
+          <h3 class="footer-heading">Ми в соц. мережах</h3>
+          <ul class="ftco-footer-social p-0">
+            {% if settings.link_facebook %}
+              <li class="ftco-animate"><a href="{{settings.link_facebook}}" data-toggle="tooltip" data-placement="top" title="Facebook"><span class="fa fa-facebook"></span></a></li>
+            {% endif %}
+            {% if settings.link_instagram %}
+              <li class="ftco-animate"><a href="{{settings.link_instagram}}" data-toggle="tooltip" data-placement="top" title="Instagram"><span class="fa fa-instagram"></span></a></li>
+            {% endif %}
+            {% if settings.link_telegram %}
+              <li class="ftco-animate"><a href="{{settings.link_telegram}}" data-toggle="tooltip" data-placement="top" title="Telegram"><span class="fa fa-telegram"></span></a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 mt-5 border-top py-5">
+      <div class="container">
+        <div class="row">
+          <div>
+            <p class="copyright mb-0">&copy;<script>document.write(new Date().getFullYear());</script> Всі права захищені | Розроблено на <i class="fa fa-rocket" aria-hidden="true"></i> <a href="#" target="_blank">webcatcms</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- END -->
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+  <!-- END -->
+ {% compress js file all  %}
+  <script src="{% static 'property/js/jquery-3.4.1.min.js'%}"></script>
+  <script src="{% static 'property/js/ion.rangeSlider.min.js'%}"></script>
+  <script src="{% static 'property/js/jquery-migrate-3.0.1.min.js'%}"></script>
+  <script src="{% static 'property/js/popper.min.js'%}"></script>
+  <script src="{% static 'property/js/bootstrap.min.js'%}"></script>
+  <script src="{% static 'property/js/jquery.easing.1.3.js'%}"></script>
+  <script src="{% static 'property/js/jquery.waypoints.min.js'%}"></script>
+  <script src="{% static 'property/js/jquery.stellar.min.js'%}"></script>
+  <script src="{% static 'property/js/owl.carousel.min.js'%}"></script>
+  <script src="{% static 'property/js/jquery.magnific-popup.min.js'%}"></script>
+  <script src="{% static 'property/js/scrollax.min.js'%}"></script>
+  <script src="{% static 'property/js/google-map.js'%}"></script>
+   {% endcompress %}
+  <script src="{% static 'property/js/main.js'%}"></script>
+  {% block js %}{% endblock %}
+   <script>
+    $('label').click(function () {
+        $(this).removeClass('cur').addClass('cur_sel');
+        $('input[type="radio"]').each(function () {
+            if(!$(this).is(':checked') ){
+                $(this).parent().removeClass('cur_sel').addClass('cur');
+            }
+        })
+    });
+     $("#price").ionRangeSlider({
+        skin: "flat",
+        min: 0,
+        max: {{ max_price }},
+        from: {{ min_price }},
+        to: {{ max_price }},
+        type: 'double',
+        prefix: "",
+        grid: true,
+        grid_num: 10,
+        prettify_enabled: true,
+        prettify_separator: ","
+    });
+
+		const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      $("#object_type").change(function () {
+          let item = this.options[this.selectedIndex].value;
+          $.ajaxSetup({
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('X-CSRFToken', csrftoken);
+            }
+          });
+
+          $.ajax({
+                url: "/search",
+                method: "POST",
+                data: {"object_type":item},
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                  console.log(JSON.stringify(data));
+                  if (data.fields == "block") {
+                      $(".col-md-6").hide()
+                  }
+                  else{
+                     $(".col-md-6").show()
+                  }
+            },
+            error: function (err) {
+              console.log(JSON.stringify(err));
+            }
+          });
+      });
+  </script>
+  </body>
+</html>
